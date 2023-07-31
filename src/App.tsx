@@ -1,19 +1,24 @@
-import './App.css';
+import ReactFlow, { Background, Controls } from 'reactflow';
+import 'reactflow/dist/style.css';
 
-function App() {
+const nodes = [
+  {
+    id: '1',
+    position: { x: 0, y: 0 },
+    data: { label: 'Hello' },
+    type: 'input',
+  },
+];
+
+const Flow = () => {
   return (
-    <>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div style={{ height: '100vh' }}>
+      <ReactFlow nodes={nodes}>
+        <Background />
+        <Controls />
+      </ReactFlow>
+    </div>
   );
-}
+};
 
-export default App;
+export default Flow;
