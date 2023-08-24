@@ -1,16 +1,16 @@
 import React, { useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
+import { NodeDataType } from '../requirementSlice.ts';
 
-interface RequirementNodeDataProps {
-  data: {
-    id: string;
-    title: string;
-    description: string;
-  };
+export type RequirementNodeComponentProps = {
+  data: NodeDataType;
   isConnectable: boolean;
-}
+};
 
-const RequirementNode = ({ data, isConnectable }: RequirementNodeDataProps) => {
+const RequirementNode = ({
+  data,
+  isConnectable,
+}: RequirementNodeComponentProps) => {
   const onChange = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
     console.log(evt.target.value);
   }, []);
