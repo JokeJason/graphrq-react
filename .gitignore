@@ -134,3 +134,4 @@ $RECYCLE.BIN/
 
 # geneated file for vite
 dist/
+src/schema.graphql

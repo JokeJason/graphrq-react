@@ -1,7 +1,11 @@
-import Flow from './components/Flow.tsx';
+import FlowData from './components/FlowData.tsx';
 
 const App = () => {
-  return <Flow />;
+  return (
+    <>
+      <FlowData />
+    </>
+  );
 };
 
 export default App;
