@@ -13,7 +13,8 @@
     "format:write": "yarn prettier -- --write",
     "types:check": "tsc --noEmit --pretty",
     "lint:fix": "eslint src --ext .js,.jsx,.ts,.tsx src --fix --no-error-on-unmatched-pattern",
-    "fix": "yarn format:write && yarn lint:fix"
+    "fix": "yarn format:write && yarn lint:fix",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
@@ -23,6 +24,7 @@
     "reactflow": "^11.7.4"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.4",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -31,6 +33,7 @@
     "eslint": "^8.38.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.0",
+    "jest": "^29.6.4",
     "prettier": "^3.0.0",
     "typescript": "^5.0.2",
     "vite": "^4.3.9"
