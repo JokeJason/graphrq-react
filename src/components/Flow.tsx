@@ -1,17 +1,14 @@
-import { useAppSelector } from '../app/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
 import 'reactflow/dist/style.css';
 
 import ReactFlow, { Background, Controls, NodeTypes } from 'reactflow';
-import {
-  onConnect,
-  onEdgesChange,
-  onNodesChange,
-} from '../requirementSlice.ts';
+import { changeEdges, changeNodes, onConnect } from '../requirementSlice.ts';
 import RequirementNode from './RequirementNode.tsx';
 
 const nodeTypes: NodeTypes = { requirement: RequirementNode };
 
 const Flow = () => {
+  const dispatch = useAppDispatch();
   const nodes = useAppSelector(state => state.requirement.nodes);
   const edges = useAppSelector(state => state.requirement.edges);
 
@@ -19,9 +16,9 @@ const Flow = () => {
     <div style={{ height: '100vh' }}>
       <ReactFlow
         nodes={nodes}
-        onNodesChange={onNodesChange}
+        onNodesChange={changes => dispatch(changeNodes(changes))}
         edges={edges}
-        onEdgesChange={onEdgesChange}
+        onEdgesChange={changes => dispatch(changeEdges(changes))}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
         fitView
