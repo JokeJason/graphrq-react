@@ -1,0 +1,11 @@
+{
+  "name": "graphrq",
+  "schema": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Local Dev GraphQL Endpoint": {
+        "url": "http://localhost:4000/graphql"
+      }
+    }
+  }
+}
