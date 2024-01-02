@@ -1,0 +1,80 @@
+{
+  "requirements": [
+    {
+      "title": "Req1",
+      "id": "93fed700-ea33-43c5-8946-a88572850a5e",
+      "description": "Description of Req1",
+      "creator": null,
+      "children": [
+        {
+          "id": "ce11a71d-f075-4752-a3cd-d7353bd60b95"
+        },
+        {
+          "id": "12128aa8-293f-4e9d-b46b-477b2e4c46be"
+        }
+      ],
+      "childrenConnection": {
+        "edges": [
+          {
+            "cursor": "YXJyYXljb25uZWN0aW9uOjA=",
+            "node": {
+              "__typename": "Requirement",
+              "id": "ce11a71d-f075-4752-a3cd-d7353bd60b95",
+              "title": "Req1.1-Updated",
+              "description": "Description of Req1.1-Updated"
+            }
+          },
+          {
+            "cursor": "YXJyYXljb25uZWN0aW9uOjE=",
+            "node": {
+              "__typename": "Requirement",
+              "id": "12128aa8-293f-4e9d-b46b-477b2e4c46be",
+              "title": "Req1.2",
+              "description": "description of Req1.2"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "title": "Req1.1-Updated",
+      "id": "ce11a71d-f075-4752-a3cd-d7353bd60b95",
+      "description": "Description of Req1.1-Updated",
+      "creator": null,
+      "children": [],
+      "childrenConnection": {
+        "edges": [
+          {
+            "cursor": "YXJyYXljb25uZWN0aW9uOjA=",
+            "node": {
+              "__typename": "Requirement",
+              "id": "93fed700-ea33-43c5-8946-a88572850a5e",
+              "title": "Req1",
+              "description": "Description of Req1"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "title": "Req1.2",
+      "id": "12128aa8-293f-4e9d-b46b-477b2e4c46be",
+      "description": "description of Req1.2",
+      "creator": null,
+      "children": [],
+      "childrenConnection": {
+        "edges": [
+          {
+            "cursor": "YXJyYXljb25uZWN0aW9uOjA=",
+            "node": {
+              "__typename": "Requirement",
+              "id": "93fed700-ea33-43c5-8946-a88572850a5e",
+              "title": "Req1",
+              "description": "Description of Req1"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
