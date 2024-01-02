@@ -3,11 +3,13 @@ import { Handle, Position } from 'reactflow';
 import { NodeDataType } from '../requirementSlice.ts';
 
 export type RequirementNodeComponentProps = {
+  id: string;
   data: NodeDataType;
   isConnectable: boolean;
 };
 
 const RequirementNode = ({
+  id,
   data,
   isConnectable,
 }: RequirementNodeComponentProps) => {
@@ -21,8 +23,7 @@ const RequirementNode = ({
         position={Position.Top}
         isConnectable={isConnectable}
       />
-      <label htmlFor={'text'}>ID:</label>
-      {/* ID from backend */}
+      <label htmlFor={'text'}>ID: {id}</label>
       <br />
       <label htmlFor={'text'}>Title:</label>
       <input id={'text'} type={'text'} onChange={onChange} value={data.title} />

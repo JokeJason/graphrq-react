@@ -1,9 +1,9 @@
-import FlowData from './components/FlowData.tsx';
+import Flow from './components/Flow.tsx';
 
 const App = () => {
   return (
     <>
-      <FlowData />
+      <Flow />
     </>
   );
 };
