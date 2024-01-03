@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
+import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
 import 'reactflow/dist/style.css';
 
 import ReactFlow, { Background, Controls, MiniMap, NodeTypes } from 'reactflow';

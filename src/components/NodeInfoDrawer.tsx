@@ -13,7 +13,7 @@ interface NodeInfoDrawerProps {
 
 const NodeInfoDrawer: React.FC<NodeInfoDrawerProps> = ({ isOpen, onClose }) => {
   return (
-    <Drawer placement={'right'} isOpen={isOpen} onClose={onClose}>
+    <Drawer placement={'right'} isOpen={isOpen} onClose={onClose} size={'sm'}>
       <DrawerOverlay />
       <DrawerContent>
         <DrawerHeader borderBottomWidth={'1px'}>Basic Drawer</DrawerHeader>
