@@ -1,10 +1,5 @@
-import {
-  Drawer,
-  DrawerBody,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-} from '@chakra-ui/react';
+import { Drawer, DrawerOverlay } from '@chakra-ui/react';
+import RequirementNodeInfoDrawerForm from '@/components/RequirementNodeInfoDrawerForm.tsx';
 
 interface NodeInfoDrawerProps {
   isOpen: boolean;
@@ -15,14 +10,7 @@ const NodeInfoDrawer: React.FC<NodeInfoDrawerProps> = ({ isOpen, onClose }) => {
   return (
     <Drawer placement={'right'} isOpen={isOpen} onClose={onClose} size={'sm'}>
       <DrawerOverlay />
-      <DrawerContent>
-        <DrawerHeader borderBottomWidth={'1px'}>Basic Drawer</DrawerHeader>
-      </DrawerContent>
-      <DrawerBody>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-        <p>Some contents...</p>
-      </DrawerBody>
+      <RequirementNodeInfoDrawerForm onClose={onClose} />
     </Drawer>
   );
 };
