@@ -9,6 +9,7 @@ import {
   Node,
   NodeChange,
 } from 'reactflow';
+import { RequirementNodeDataChange } from './types.ts';
 
 const initialState: { nodes: Node[]; edges: Edge[] } = {
   nodes: [],
@@ -36,8 +37,23 @@ export const requirementSlice = createSlice({
     loadEdges: (state, action: PayloadAction<Edge[]>) => {
       state.edges = action.payload;
     },
+    changeRequirementNodeData: (
+      state,
+      action: PayloadAction<RequirementNodeDataChange>,
+    ) => {
+      const node = state.nodes.find(n => n.id === action.payload.id);
+      if (node) {
+        node.data = action.payload.data;
+      }
+    },
   },
 });
 
-export const { onConnect, changeEdges, changeNodes, loadNodes, loadEdges } =
-  requirementSlice.actions;
+export const {
+  onConnect,
+  changeEdges,
+  changeNodes,
+  loadNodes,
+  loadEdges,
+  changeRequirementNodeData,
+} = requirementSlice.actions;

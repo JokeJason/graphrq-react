@@ -1,27 +1,31 @@
-import { Handle, Position } from 'reactflow';
-import { NodeData } from '../types.ts';
+import { Handle, NodeProps, Position } from 'reactflow';
 import {
   Box,
   Card,
   CardBody,
   CardHeader,
+  Editable,
+  EditableInput,
+  EditablePreview,
   Heading,
   Stack,
   StackDivider,
   Text,
 } from '@chakra-ui/react';
+import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
+import { changeRequirementNodeData } from '../requirementSlice.ts';
+import { NodeData } from '../types.ts';
 
-export type RequirementNodeComponentProps = {
-  data: NodeData;
-  isConnectable: boolean;
-};
+const RequirementNode = ({ id, isConnectable }: NodeProps) => {
+  const nodeData: NodeData = useAppSelector(
+    state => state.requirement.nodes.find(n => n.id === id)?.data,
+  );
+  const dispatch = useAppDispatch();
 
-const RequirementNode = ({
-  data,
-  isConnectable,
-}: RequirementNodeComponentProps) => {
+  if (!nodeData) return <p>Loading</p>;
+
   return (
-    <Card>
+    <Card id={id}>
       <Handle
         type={'target'}
         position={Position.Left}
@@ -29,7 +33,20 @@ const RequirementNode = ({
       />
       <CardHeader>
         <Heading as="h4" size="md">
-          {data.title}
+          <Editable
+            defaultValue={nodeData.title}
+            onChange={text =>
+              dispatch(
+                changeRequirementNodeData({
+                  id: id,
+                  data: { title: text, description: nodeData.description },
+                }),
+              )
+            }
+          >
+            <EditablePreview />
+            <EditableInput />
+          </Editable>
         </Heading>
       </CardHeader>
       <CardBody>
@@ -37,7 +54,7 @@ const RequirementNode = ({
         <Box>
           <Heading size={'xs'}>Description</Heading>
           <Text pt={'2'} fontSize={'sm'}>
-            {data.description}
+            {nodeData.description}
           </Text>
         </Box>
       </CardBody>
