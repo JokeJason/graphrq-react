@@ -3,18 +3,13 @@ import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 import { useAppDispatch } from '@/app/hooks.ts';
 import { loadEdges, loadNodes } from '@/features/ReactFlow/requirementSlice.ts';
-import Flow from '@/features/ReactFlow/Flow.tsx';
 import { getLayoutedElements } from '@/utils/layout.ts';
 import { GetRequirementsDocument } from '@/gql/graphql.ts';
-import NodeInfoDrawer from '@/components/NodeInfoDrawer.tsx';
-import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
+import Flow from '@/features/ReactFlow/Flow.tsx';
 
 const App = () => {
   const dispatch = useAppDispatch();
-  // const isDrawerOpen = useAppSelector(state => state.requirement.isDrawerOpen);
   const { loading, error, data } = useQuery(GetRequirementsDocument);
-
-  const { isDrawerOpen, onDrawerClose } = useDrawerDisclosure();
 
   useEffect(() => {
     if (data) {
@@ -35,7 +30,6 @@ const App = () => {
   return (
     <>
       <Flow />
-      <NodeInfoDrawer isOpen={isDrawerOpen} onClose={onDrawerClose} />
     </>
   );
 };
