@@ -1,4 +1,4 @@
-import { useAppSelector } from '../hooks.ts';
+import { useAppSelector } from '@/app/hooks.ts';
 import { useCallback } from 'react';
 import {
   closeDrawer,
