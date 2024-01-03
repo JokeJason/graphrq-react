@@ -1,7 +1,7 @@
 import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
 import 'reactflow/dist/style.css';
 
-import ReactFlow, { Background, Controls, NodeTypes } from 'reactflow';
+import ReactFlow, { Background, Controls, MiniMap, NodeTypes } from 'reactflow';
 import { changeEdges, changeNodes, onConnect } from '../requirementSlice.ts';
 import RequirementNode from './RequirementNode.tsx';
 
@@ -25,6 +25,7 @@ const Flow = () => {
       >
         <Background />
         <Controls />
+        <MiniMap />
       </ReactFlow>
     </div>
   );
