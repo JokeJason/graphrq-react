@@ -1,9 +1,9 @@
-import { NodeType } from './types.ts';
+import { EdgeType, NodeType } from './types.ts';
 
 const convertRequirementToReactFlowNode = (requirement: {
-  id: any;
-  title: any;
-  description: any;
+  id: string;
+  title: string;
+  description: string;
 }): NodeType => {
   return {
     id: requirement.id,
@@ -19,13 +19,30 @@ export const createReactFlowNodes = (
   return requirements.map(req => convertRequirementToReactFlowNode(req));
 };
 
-// const createEdge = (
-//   parentNode: { id: any },
-//   childNode: { id: any },
-// ): EdgeType => {
-//   return {
-//     id: `edge-${parentNode.id}<->${childNode.id}`,
-//     source: parentNode.id,
-//     target: childNode.id,
-//   };
-// };
+const convertRequirementWithChildrenToReactFlowEdges = (requirement: {
+  id: any;
+  children: {
+    id: string;
+  }[];
+}): EdgeType[] => {
+  return requirement.children.map(child => {
+    return {
+      id: `edge-${requirement.id}<->${child.id}`,
+      source: requirement.id,
+      target: child.id,
+    };
+  });
+};
+
+export const createReactFlowEdges = (
+  requirements: Array<{
+    id: string;
+    title: string;
+    description: string;
+    children: { id: string }[];
+  }>,
+): EdgeType[] => {
+  return requirements.flatMap(req =>
+    convertRequirementWithChildrenToReactFlowEdges(req),
+  );
+};

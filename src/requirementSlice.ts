@@ -34,22 +34,9 @@ type requirementNodeStateProps = {
   edges: EdgeType[];
 };
 
-const initialNodes: NodeType[] = [
-  {
-    id: '1',
-    data: { title: 'Req1', description: 'Description of Req1' },
-    position: { x: 0, y: 0 },
-    type: 'requirement',
-  },
-  {
-    id: '2',
-    data: { title: 'Req2', description: 'Description of Req2' },
-    position: { x: 100, y: 100 },
-    type: 'requirement',
-  },
-];
+const initialNodes: NodeType[] = [];
 
-const initialEdges: EdgeType[] = [{ id: '1-2', source: '1', target: '2' }];
+const initialEdges: EdgeType[] = [];
 
 const initialState: requirementNodeStateProps = {
   nodes: initialNodes,
@@ -71,7 +58,14 @@ export const requirementSlice = createSlice({
       const nodes = applyNodeChanges(action.payload, state.nodes);
       state.nodes = nodes as Draft<NodeType[]>;
     },
+    loadNodes: (state, action: PayloadAction<NodeType[]>) => {
+      state.nodes = action.payload;
+    },
+    loadEdges: (state, action: PayloadAction<EdgeType[]>) => {
+      state.edges = action.payload;
+    },
   },
 });
 
-export const { onConnect, changeEdges, changeNodes } = requirementSlice.actions;
+export const { onConnect, changeEdges, changeNodes, loadNodes, loadEdges } =
+  requirementSlice.actions;
