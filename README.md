@@ -26,3 +26,4 @@ details.
   please read
   specially [TypedDocumentNode](https://the-guild.dev/blog/typed-document-node) for details)
   or [Apollo Code generator](https://www.apollographql.com/blog/typescript-graphql-code-generator-generate-graphql-types)
+- [ ] Migrate to RTK 2.0 and Redux 5.0
