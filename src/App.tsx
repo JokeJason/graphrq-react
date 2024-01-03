@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useAppDispatch } from './app/hooks.ts';
 import { loadEdges, loadNodes } from './requirementSlice.ts';
 import Flow from './components/Flow.tsx';
+import { getLayoutedElements } from './layout.ts';
 
 const GET_REQUIREMNTS = gql(`
   query Requirements {
@@ -24,8 +25,14 @@ const App = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch(loadNodes(utils.createReactFlowNodes(data.requirements)));
-      dispatch(loadEdges(utils.createReactFlowEdges(data.requirements)));
+      const initialStates = getLayoutedElements(
+        utils.createReactFlowNodes(data.requirements),
+        utils.createReactFlowEdges(data.requirements),
+        'LR',
+      );
+
+      dispatch(loadNodes(initialStates.nodes));
+      dispatch(loadEdges(initialStates.edges));
     }
   }, [data]);
 
