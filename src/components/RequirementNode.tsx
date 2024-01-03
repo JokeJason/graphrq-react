@@ -32,7 +32,7 @@ const RequirementNode = ({
         id={'text'}
         type={'text'}
         onChange={onChange}
-        value={data.description}
+        value={data.description || ''}
       />
       <br />
       <Handle

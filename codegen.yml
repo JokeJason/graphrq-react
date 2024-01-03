@@ -1,0 +1,7 @@
+# generate TypeScript types from GraphQL operations following https://the-guild.dev/graphql/codegen/plugins/presets/preset-client
+schema: ./src/schema.graphql
+documents: ./src/operations.graphql
+generates:
+  ./src/gql/:
+    preset: client
+# no need for typescript plugins, as they are already included in the preset (refer to https://the-guild.dev/graphql/codegen/plugins/typescript/typescript-react-apollo)

@@ -10,7 +10,7 @@ import {
 
 export type NodeDataType = {
   title: string;
-  description: string;
+  description: string | null | undefined;
 };
 
 export type NodeType = {

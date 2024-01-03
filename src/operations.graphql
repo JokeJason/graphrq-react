@@ -1,0 +1,10 @@
+query GetRequirements {
+    requirements {
+        id
+        title
+        description
+        children {
+            id
+        }
+    }
+}

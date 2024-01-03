@@ -1,48 +1,35 @@
 import { EdgeType, NodeType } from './types.ts';
-
-const convertRequirementToReactFlowNode = (requirement: {
-  id: string;
-  title: string;
-  description: string;
-}): NodeType => {
-  return {
-    id: requirement.id,
-    data: { title: requirement.title, description: requirement.description },
-    position: { x: 0, y: 0 },
-    type: 'requirement',
-  };
-};
+import { GetRequirementsQuery } from './gql/graphql.ts';
 
 export const createReactFlowNodes = (
-  requirements: Array<{ id: string; title: string; description: string }>,
+  requirements: GetRequirementsQuery['requirements'],
 ): NodeType[] => {
-  return requirements.map(req => convertRequirementToReactFlowNode(req));
-};
-
-const convertRequirementWithChildrenToReactFlowEdges = (requirement: {
-  id: any;
-  children: {
-    id: string;
-  }[];
-}): EdgeType[] => {
-  return requirement.children.map(child => {
-    return {
-      id: `edge-${requirement.id}<->${child.id}`,
-      source: requirement.id,
-      target: child.id,
-    };
-  });
+  return requirements.map(req =>
+    // construct NodeType from single requirement
+    ({
+      id: req.id,
+      data: {
+        title: req.title,
+        description: req.description,
+      },
+      position: {
+        x: 0,
+        y: 0,
+      },
+      type: req.__typename?.toLowerCase(),
+    }),
+  );
 };
 
 export const createReactFlowEdges = (
-  requirements: Array<{
-    id: string;
-    title: string;
-    description: string;
-    children: { id: string }[];
-  }>,
+  requirements: GetRequirementsQuery['requirements'],
 ): EdgeType[] => {
   return requirements.flatMap(req =>
-    convertRequirementWithChildrenToReactFlowEdges(req),
+    // construct EdgeType from single requirement
+    req.children.map(child => ({
+      id: `${req.id}-${child.id}`,
+      source: req.id,
+      target: child.id,
+    })),
   );
 };
