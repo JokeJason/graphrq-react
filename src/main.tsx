@@ -5,6 +5,7 @@ import App from './App.tsx';
 import { Provider } from 'react-redux';
 import { store } from './app/store.ts';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000/graphql',
@@ -16,7 +17,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <ApolloProvider client={client}>
       <Provider store={store}>
         <ReactFlowProvider>
-          <App />
+          <ChakraProvider>
+            <App />
+          </ChakraProvider>
         </ReactFlowProvider>
       </Provider>
     </ApolloProvider>

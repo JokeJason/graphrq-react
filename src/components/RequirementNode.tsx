@@ -1,6 +1,15 @@
-import React, { useCallback } from 'react';
 import { Handle, Position } from 'reactflow';
 import { NodeDataType } from '../requirementSlice.ts';
+import {
+  Box,
+  Card,
+  CardBody,
+  CardHeader,
+  Heading,
+  Stack,
+  StackDivider,
+  Text,
+} from '@chakra-ui/react';
 
 export type RequirementNodeComponentProps = {
   data: NodeDataType;
@@ -11,37 +20,34 @@ const RequirementNode = ({
   data,
   isConnectable,
 }: RequirementNodeComponentProps) => {
-  const onChange = useCallback((evt: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(evt.target.value);
-  }, []);
   return (
-    <div>
+    <Card>
       <Handle
         type={'target'}
         position={Position.Left}
         isConnectable={isConnectable}
       />
-      <label htmlFor={'text'}>ID:</label>
-      {/* ID from backend */}
-      <br />
-      <label htmlFor={'text'}>Title:</label>
-      <input id={'text'} type={'text'} onChange={onChange} value={data.title} />
-      <br />
-      <label htmlFor={'text'}>Description:</label>
-      <input
-        id={'text'}
-        type={'text'}
-        onChange={onChange}
-        value={data.description || ''}
-      />
-      <br />
+      <CardHeader>
+        <Heading as="h4" size="md">
+          {data.title}
+        </Heading>
+      </CardHeader>
+      <CardBody>
+        <Stack divider={<StackDivider />} spacing={4}></Stack>
+        <Box>
+          <Heading size={'xs'}>Description</Heading>
+          <Text pt={'2'} fontSize={'sm'}>
+            {data.description}
+          </Text>
+        </Box>
+      </CardBody>
       <Handle
         type={'source'}
         position={Position.Right}
         id="b"
         isConnectable={isConnectable}
       />
-    </div>
+    </Card>
   );
 };
 
