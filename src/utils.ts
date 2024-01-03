@@ -1,9 +1,9 @@
-import { EdgeType, NodeType } from './types.ts';
 import { GetRequirementsQuery } from './gql/graphql.ts';
+import { Edge, Node } from 'reactflow';
 
 export const createReactFlowNodes = (
   requirements: GetRequirementsQuery['requirements'],
-): NodeType[] => {
+): Node[] => {
   return requirements.map(req =>
     // construct NodeType from single requirement
     ({
@@ -23,7 +23,7 @@ export const createReactFlowNodes = (
 
 export const createReactFlowEdges = (
   requirements: GetRequirementsQuery['requirements'],
-): EdgeType[] => {
+): Edge[] => {
   return requirements.flatMap(req =>
     // construct EdgeType from single requirement
     req.children.map(child => ({

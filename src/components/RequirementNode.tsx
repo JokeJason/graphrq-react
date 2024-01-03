@@ -1,5 +1,5 @@
 import { Handle, Position } from 'reactflow';
-import { NodeDataType } from '../requirementSlice.ts';
+import { NodeData } from '../types.ts';
 import {
   Box,
   Card,
@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 
 export type RequirementNodeComponentProps = {
-  data: NodeDataType;
+  data: NodeData;
   isConnectable: boolean;
 };
 

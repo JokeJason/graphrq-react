@@ -4,43 +4,15 @@ import {
   applyEdgeChanges,
   applyNodeChanges,
   Connection,
+  Edge,
   EdgeChange,
+  Node,
   NodeChange,
 } from 'reactflow';
 
-export type NodeDataType = {
-  title: string;
-  description: string | null | undefined;
-};
-
-export type NodeType = {
-  id: string;
-  data: NodeDataType;
-  position: {
-    x: number;
-    y: number;
-  };
-  type: string | undefined;
-};
-
-type EdgeType = {
-  id: string;
-  source: string;
-  target: string;
-};
-
-type requirementNodeStateProps = {
-  nodes: NodeType[];
-  edges: EdgeType[];
-};
-
-const initialNodes: NodeType[] = [];
-
-const initialEdges: EdgeType[] = [];
-
-const initialState: requirementNodeStateProps = {
-  nodes: initialNodes,
-  edges: initialEdges,
+const initialState: { nodes: Node[]; edges: Edge[] } = {
+  nodes: [],
+  edges: [],
 };
 
 export const requirementSlice = createSlice({
@@ -52,16 +24,16 @@ export const requirementSlice = createSlice({
     },
     changeEdges: (state, action: PayloadAction<EdgeChange[]>) => {
       const changes = applyEdgeChanges(action.payload, state.edges);
-      state.edges = changes as Draft<EdgeType[]>;
+      state.edges = changes as Draft<Edge[]>;
     },
     changeNodes: (state, action: PayloadAction<NodeChange[]>) => {
       const nodes = applyNodeChanges(action.payload, state.nodes);
-      state.nodes = nodes as Draft<NodeType[]>;
+      state.nodes = nodes as Draft<Node[]>;
     },
-    loadNodes: (state, action: PayloadAction<NodeType[]>) => {
+    loadNodes: (state, action: PayloadAction<Node[]>) => {
       state.nodes = action.payload;
     },
-    loadEdges: (state, action: PayloadAction<EdgeType[]>) => {
+    loadEdges: (state, action: PayloadAction<Edge[]>) => {
       state.edges = action.payload;
     },
   },
