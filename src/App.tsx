@@ -1,13 +1,13 @@
-import * as utils from './utils.ts';
+import * as utils from './utils/utils.ts';
 import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
-import { useAppDispatch } from './app/hooks.ts';
-import { loadEdges, loadNodes } from './requirementSlice.ts';
-import Flow from './components/Flow.tsx';
-import { getLayoutedElements } from './layout.ts';
-import { GetRequirementsDocument } from './gql/graphql.ts';
-import NodeInfoDrawer from './components/NodeInfoDrawer.tsx';
-import useDrawerDisclosure from './app/hooks/useDrawerDisclosure.ts';
+import { useAppDispatch } from '@/app/hooks.ts';
+import { loadEdges, loadNodes } from '@/features/ReactFlow/requirementSlice.ts';
+import Flow from '@/features/ReactFlow/Flow.tsx';
+import { getLayoutedElements } from '@/utils/layout.ts';
+import { GetRequirementsDocument } from '@/gql/graphql.ts';
+import NodeInfoDrawer from '@/components/NodeInfoDrawer.tsx';
+import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
 
 const App = () => {
   const dispatch = useAppDispatch();

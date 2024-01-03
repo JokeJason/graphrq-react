@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../../app/hooks.ts';
 import 'reactflow/dist/style.css';
 
 import ReactFlow, { Background, Controls, MiniMap, NodeTypes } from 'reactflow';
-import { changeEdges, changeNodes, onConnect } from '../requirementSlice.ts';
-import RequirementNode from './RequirementNode.tsx';
+import { changeEdges, changeNodes, onConnect } from './requirementSlice.ts';
+import RequirementNode from '@/components/RequirementNode.tsx';
 
 const nodeTypes: NodeTypes = { requirement: RequirementNode };
 

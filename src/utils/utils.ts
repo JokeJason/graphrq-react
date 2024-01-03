@@ -1,4 +1,4 @@
-import { GetRequirementsQuery } from './gql/graphql.ts';
+import { GetRequirementsQuery } from '@/gql/graphql.ts';
 import { Edge, Node } from 'reactflow';
 
 export const createReactFlowNodes = (

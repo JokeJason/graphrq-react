@@ -12,10 +12,10 @@ import {
   StackDivider,
   Text,
 } from '@chakra-ui/react';
-import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
-import { changeRequirementNodeData } from '../requirementSlice.ts';
-import { NodeData } from '../types.ts';
-import useDrawerDisclosure from '../app/hooks/useDrawerDisclosure.ts';
+import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
+import { changeRequirementNodeData } from '@/features/ReactFlow/requirementSlice.ts';
+import { NodeData } from '@/types.ts';
+import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
 
 const RequirementNode = ({ id, isConnectable }: NodeProps) => {
   const nodeData: NodeData = useAppSelector(

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { requirementSlice } from '../requirementSlice.ts';
+import { requirementSlice } from '@/features/ReactFlow/requirementSlice.ts';
 
 export const store = configureStore({
   reducer: { requirement: requirementSlice.reducer },

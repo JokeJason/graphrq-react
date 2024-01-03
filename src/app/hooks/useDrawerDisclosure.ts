@@ -1,6 +1,9 @@
 import { useAppSelector } from '../hooks.ts';
 import { useCallback } from 'react';
-import { closeDrawer, openDrawer } from '../../requirementSlice.ts';
+import {
+  closeDrawer,
+  openDrawer,
+} from '@/features/ReactFlow/requirementSlice.ts';
 import { useDispatch } from 'react-redux';
 
 const useDrawerDisclosure = () => {
