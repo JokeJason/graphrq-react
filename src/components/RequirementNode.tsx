@@ -18,7 +18,7 @@ const RequirementNode = ({
     <div>
       <Handle
         type={'target'}
-        position={Position.Top}
+        position={Position.Left}
         isConnectable={isConnectable}
       />
       <label htmlFor={'text'}>ID:</label>
@@ -37,7 +37,7 @@ const RequirementNode = ({
       <br />
       <Handle
         type={'source'}
-        position={Position.Bottom}
+        position={Position.Right}
         id="b"
         isConnectable={isConnectable}
       />
