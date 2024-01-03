@@ -11,9 +11,10 @@ import {
 } from 'reactflow';
 import { RequirementNodeDataChange } from './types.ts';
 
-const initialState: { nodes: Node[]; edges: Edge[] } = {
+const initialState: { nodes: Node[]; edges: Edge[]; isDrawerOpen: boolean } = {
   nodes: [],
   edges: [],
+  isDrawerOpen: false,
 };
 
 export const requirementSlice = createSlice({
@@ -46,6 +47,12 @@ export const requirementSlice = createSlice({
         node.data = action.payload.data;
       }
     },
+    openDrawer: state => {
+      state.isDrawerOpen = true;
+    },
+    closeDrawer: state => {
+      state.isDrawerOpen = false;
+    },
   },
 });
 
@@ -56,4 +63,6 @@ export const {
   loadNodes,
   loadEdges,
   changeRequirementNodeData,
+  openDrawer,
+  closeDrawer,
 } = requirementSlice.actions;

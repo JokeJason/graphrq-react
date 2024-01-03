@@ -15,17 +15,19 @@ import {
 import { useAppDispatch, useAppSelector } from '../app/hooks.ts';
 import { changeRequirementNodeData } from '../requirementSlice.ts';
 import { NodeData } from '../types.ts';
+import useDrawerDisclosure from '../app/hooks/useDrawerDisclosure.ts';
 
 const RequirementNode = ({ id, isConnectable }: NodeProps) => {
   const nodeData: NodeData = useAppSelector(
     state => state.requirement.nodes.find(n => n.id === id)?.data,
   );
   const dispatch = useAppDispatch();
+  const { onDrawerOpen } = useDrawerDisclosure();
 
   if (!nodeData) return <p>Loading</p>;
 
   return (
-    <Card id={id}>
+    <Card id={id} onClick={onDrawerOpen}>
       <Handle
         type={'target'}
         position={Position.Left}

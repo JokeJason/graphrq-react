@@ -6,7 +6,12 @@ import {
   DrawerOverlay,
 } from '@chakra-ui/react';
 
-const NodeInfoDrawer = (isOpen: boolean, onClose: () => void) => {
+interface NodeInfoDrawerProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const NodeInfoDrawer: React.FC<NodeInfoDrawerProps> = ({ isOpen, onClose }) => {
   return (
     <Drawer placement={'right'} isOpen={isOpen} onClose={onClose}>
       <DrawerOverlay />
