@@ -24,6 +24,7 @@ export const requirementSlice = createSlice({
   initialState: initialState,
   reducers: {
     loadGraph: (state, action: PayloadAction<any>) => {
+      // TODO: this is a hack to prevent the reload graph will lose the layout. Need to find a better way to handle updated layout
       if (state.nodes.length === 0) {
         const initialState = getLayoutedElements(
           utils.createReactFlowNodes(action.payload.requirements),
