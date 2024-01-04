@@ -1,4 +1,6 @@
-import { Handle, NodeProps, Position } from 'reactflow';
+import { useAppSelector } from '@/app/hooks.ts';
+import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
+import { NodeData } from '@/types.ts';
 import {
   Box,
   Card,
@@ -9,9 +11,7 @@ import {
   StackDivider,
   Text,
 } from '@chakra-ui/react';
-import { useAppSelector } from '@/app/hooks.ts';
-import { NodeData } from '@/types.ts';
-import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
+import { Handle, NodeProps, Position } from 'reactflow';
 
 const RequirementNode = ({ id, isConnectable }: NodeProps) => {
   const nodeData: NodeData = useAppSelector(
@@ -29,9 +29,7 @@ const RequirementNode = ({ id, isConnectable }: NodeProps) => {
         isConnectable={isConnectable}
       />
       <CardHeader>
-        <Heading as="h4" size="md">
-          <Heading size={'md'}>{nodeData.title}</Heading>
-        </Heading>
+        <Heading size={'md'}>{nodeData.title}</Heading>
       </CardHeader>
       <CardBody>
         <Stack divider={<StackDivider />} spacing={4}></Stack>
