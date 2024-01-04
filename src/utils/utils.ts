@@ -27,7 +27,7 @@ export const createReactFlowEdges = (
   return requirements.flatMap(req =>
     // construct EdgeType from single requirement
     req.children.map(child => ({
-      id: `${req.id}-${child.id}`,
+      id: `edge-${req.id}<->${child.id}`,
       source: req.id,
       target: child.id,
     })),
