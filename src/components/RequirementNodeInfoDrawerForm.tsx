@@ -11,6 +11,7 @@ import {
   Input,
   Stack,
 } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
 
 interface RequirementNodeInfoDrawerFormProps {
   id: string;
@@ -21,6 +22,15 @@ interface RequirementNodeInfoDrawerFormProps {
 const RequirementNodeInfoDrawerForm: React.FC<
   RequirementNodeInfoDrawerFormProps
 > = ({ id, data, onClose }) => {
+  // use React state to store the title and description
+  const [title, setTitle] = useState(data.title);
+  const [description, setDescription] = useState(data.description);
+
+  useEffect(() => {
+    setTitle(data.title);
+    setDescription(data.description);
+  }, [data]);
+
   const {
     register,
     handleSubmit,
@@ -39,14 +49,16 @@ const RequirementNodeInfoDrawerForm: React.FC<
             <FormLabel htmlFor="title">Title</FormLabel>
             <Input
               {...register('title', { required: true })}
-              value={data.title}
+              value={title}
+              onChange={e => setTitle(e.target.value)}
             />
           </Box>
           <Box>
             <FormLabel htmlFor="description">Description</FormLabel>
             <Input
               {...register('description', { required: false })}
-              value={data.description}
+              value={description}
+              onChange={e => setDescription(e.target.value)}
             />
           </Box>
         </Stack>
