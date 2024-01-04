@@ -9,7 +9,7 @@ import {
   Node,
   NodeChange,
 } from 'reactflow';
-import { RequirementNodeDataChange } from '../../types.ts';
+import { RequirementNodeDataChange } from '@/types.ts';
 
 const initialState: { nodes: Node[]; edges: Edge[]; isDrawerOpen: boolean } = {
   nodes: [],
