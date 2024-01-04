@@ -1,10 +1,8 @@
-import * as utils from './utils/utils.ts';
-import { useQuery } from '@apollo/client';
 import { useAppDispatch } from '@/app/hooks.ts';
-import { setEdges, setNodes } from '@/features/ReactFlow/requirementSlice.ts';
-import { getLayoutedElements } from '@/utils/layout.ts';
-import { GetRequirementsDocument } from '@/gql/graphql.ts';
 import Flow from '@/features/ReactFlow/Flow.tsx';
+import { loadGraph } from '@/features/ReactFlow/requirementSlice.ts';
+import { GetRequirementsDocument } from '@/gql/graphql.ts';
+import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
 
 const App = () => {
@@ -18,14 +16,7 @@ const App = () => {
 
   useEffect(() => {
     if (data) {
-      const initialStates = getLayoutedElements(
-        utils.createReactFlowNodes(data.requirements),
-        utils.createReactFlowEdges(data.requirements),
-        'LR',
-      );
-
-      dispatch(setNodes(initialStates.nodes));
-      dispatch(setEdges(initialStates.edges));
+      dispatch(loadGraph(data));
     }
   }, [data]);
 

@@ -1,3 +1,6 @@
+import { RequirementNodeDataChange } from '@/types.ts';
+import { getLayoutedElements } from '@/utils/layout.ts';
+import * as utils from '@/utils/utils.ts';
 import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
 import {
   addEdge,
@@ -9,7 +12,6 @@ import {
   Node,
   NodeChange,
 } from 'reactflow';
-import { RequirementNodeDataChange } from '@/types.ts';
 
 const initialState: { nodes: Node[]; edges: Edge[]; isDrawerOpen: boolean } = {
   nodes: [],
@@ -21,6 +23,31 @@ export const requirementSlice = createSlice({
   name: 'requirementNodes',
   initialState: initialState,
   reducers: {
+    loadGraph: (state, action: PayloadAction<any>) => {
+      if (state.nodes.length === 0) {
+        const initialState = getLayoutedElements(
+          utils.createReactFlowNodes(action.payload.requirements),
+          utils.createReactFlowEdges(action.payload.requirements),
+          'LR',
+        );
+
+        state.nodes = initialState.nodes;
+        state.edges = initialState.edges;
+      } else {
+        // for each action.payload.requirements, find the corresponding node in state.nodes and update action.payload.requirements[i].data
+        action.payload.requirements.forEach(
+          (req: { id: string; title: any; description: any }) => {
+            const node = state.nodes.find(n => n.id === req.id);
+            if (node) {
+              node.data = {
+                title: req.title,
+                description: req.description,
+              };
+            }
+          },
+        );
+      }
+    },
     onConnect: (state, action: PayloadAction<Connection>) => {
       state.edges = addEdge(action.payload, state.edges);
     },
@@ -57,6 +84,7 @@ export const requirementSlice = createSlice({
 });
 
 export const {
+  loadGraph,
   onConnect,
   changeEdges,
   changeNodes,
