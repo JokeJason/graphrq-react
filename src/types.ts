@@ -1,6 +1,6 @@
 export type NodeData = {
   title: string;
-  description: string | null | undefined;
+  description: string | undefined;
 };
 
 export type RequirementNodeDataChange = {

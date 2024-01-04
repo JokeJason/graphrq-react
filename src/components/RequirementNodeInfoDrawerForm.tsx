@@ -13,12 +13,14 @@ import {
 } from '@chakra-ui/react';
 
 interface RequirementNodeInfoDrawerFormProps {
+  id: string;
+  data: NodeData;
   onClose: () => void;
 }
 
 const RequirementNodeInfoDrawerForm: React.FC<
   RequirementNodeInfoDrawerFormProps
-> = ({ onClose }) => {
+> = ({ id, data, onClose }) => {
   const {
     register,
     handleSubmit,
@@ -27,7 +29,7 @@ const RequirementNodeInfoDrawerForm: React.FC<
   const onSubmit: SubmitHandler<NodeData> = data => console.log(data);
 
   return (
-    <DrawerContent>
+    <DrawerContent id={id}>
       <DrawerHeader borderBottomWidth={'1px'}>
         Requirement Node Details
       </DrawerHeader>
@@ -35,11 +37,17 @@ const RequirementNodeInfoDrawerForm: React.FC<
         <Stack spacing="24px">
           <Box>
             <FormLabel htmlFor="title">Title</FormLabel>
-            <Input {...register('title', { required: true })} />
+            <Input
+              {...register('title', { required: true })}
+              value={data.title}
+            />
           </Box>
           <Box>
             <FormLabel htmlFor="description">Description</FormLabel>
-            <Input {...register('description', { required: false })} />
+            <Input
+              {...register('description', { required: false })}
+              value={data.description}
+            />
           </Box>
         </Stack>
       </DrawerBody>
@@ -48,7 +56,7 @@ const RequirementNodeInfoDrawerForm: React.FC<
         <Button variant="outline" mr={3} onClick={onClose}>
           Cancel
         </Button>
-        <Button colorScheme="blue" onClick={onSubmit}>
+        <Button colorScheme="blue" onClick={handleSubmit(onSubmit)}>
           Submit
         </Button>
       </DrawerFooter>
