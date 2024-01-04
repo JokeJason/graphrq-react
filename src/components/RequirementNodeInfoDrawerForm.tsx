@@ -9,9 +9,15 @@ import {
   DrawerHeader,
   FormLabel,
   Input,
+  Spinner,
   Stack,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
+import { useMutation } from '@apollo/client';
+import {
+  GetRequirementsDocument,
+  UpdateRequirementsDocument,
+} from '@/gql/graphql.ts';
 
 interface RequirementNodeInfoDrawerFormProps {
   id: string;
@@ -22,7 +28,13 @@ interface RequirementNodeInfoDrawerFormProps {
 const RequirementNodeInfoDrawerForm: React.FC<
   RequirementNodeInfoDrawerFormProps
 > = ({ id, data, onClose }) => {
-  // use React state to store the title and description
+  const [updateRequirementNode, { loading, error }] = useMutation(
+    UpdateRequirementsDocument,
+    {
+      refetchQueries: [GetRequirementsDocument],
+    },
+  );
+
   const [title, setTitle] = useState(data.title);
   const [description, setDescription] = useState(data.description);
 
@@ -36,7 +48,48 @@ const RequirementNodeInfoDrawerForm: React.FC<
     handleSubmit,
     // formState: { errors },
   } = useForm<NodeData>();
-  const onSubmit: SubmitHandler<NodeData> = data => console.log(data);
+  const onSubmit: SubmitHandler<NodeData> = (data: NodeData) => {
+    updateRequirementNode({
+      variables: {
+        where: {
+          id: id,
+        },
+        update: {
+          title: data.title,
+          description: data.description,
+        },
+      },
+    });
+
+    onClose();
+  };
+
+  if (loading)
+    return (
+      <DrawerContent id={id}>
+        <DrawerHeader borderBottomWidth={'1px'}>
+          Requirement Node Details
+        </DrawerHeader>
+        <DrawerBody>
+          <Spinner />
+        </DrawerBody>
+      </DrawerContent>
+    );
+
+  if (error) {
+    return (
+      <DrawerContent id={id}>
+        <DrawerHeader borderBottomWidth={'1px'}>
+          Requirement Node Details
+        </DrawerHeader>
+        <DrawerBody>
+          <p>Error: {error.message}</p>
+        </DrawerBody>
+      </DrawerContent>
+    );
+  }
+
+  // use React state to store the title and description
 
   return (
     <DrawerContent id={id}>

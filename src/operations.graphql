@@ -8,3 +8,16 @@ query GetRequirements {
         }
     }
 }
+
+mutation UpdateRequirements($where: RequirementWhere, $update: RequirementUpdateInput) {
+    updateRequirements(where: $where, update: $update) {
+        requirements {
+            id
+            title
+            description
+            children {
+                id
+            }
+        }
+    }
+}
