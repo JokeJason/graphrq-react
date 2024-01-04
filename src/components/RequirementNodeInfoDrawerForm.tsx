@@ -14,10 +14,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
-import {
-  GetRequirementsDocument,
-  UpdateRequirementsDocument,
-} from '@/gql/graphql.ts';
+import { UpdateRequirementsDocument } from '@/gql/graphql.ts';
 
 interface RequirementNodeInfoDrawerFormProps {
   id: string;
@@ -30,9 +27,6 @@ const RequirementNodeInfoDrawerForm: React.FC<
 > = ({ id, data, onClose }) => {
   const [updateRequirementNode, { loading, error }] = useMutation(
     UpdateRequirementsDocument,
-    {
-      refetchQueries: [GetRequirementsDocument],
-    },
   );
 
   const [title, setTitle] = useState(data.title);

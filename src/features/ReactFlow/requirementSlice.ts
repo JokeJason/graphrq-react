@@ -32,10 +32,10 @@ export const requirementSlice = createSlice({
       const nodes = applyNodeChanges(action.payload, state.nodes);
       state.nodes = nodes as Draft<Node[]>;
     },
-    loadNodes: (state, action: PayloadAction<Node[]>) => {
+    setNodes: (state, action: PayloadAction<Node[]>) => {
       state.nodes = action.payload;
     },
-    loadEdges: (state, action: PayloadAction<Edge[]>) => {
+    setEdges: (state, action: PayloadAction<Edge[]>) => {
       state.edges = action.payload;
     },
     changeRequirementNodeData: (
@@ -60,8 +60,8 @@ export const {
   onConnect,
   changeEdges,
   changeNodes,
-  loadNodes,
-  loadEdges,
+  setNodes,
+  setEdges,
   changeRequirementNodeData,
   openDrawer,
   closeDrawer,
