@@ -4,16 +4,12 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Editable,
-  EditableInput,
-  EditablePreview,
   Heading,
   Stack,
   StackDivider,
   Text,
 } from '@chakra-ui/react';
-import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
-import { changeRequirementNodeData } from '@/features/ReactFlow/requirementSlice.ts';
+import { useAppSelector } from '@/app/hooks.ts';
 import { NodeData } from '@/types.ts';
 import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
 
@@ -21,7 +17,6 @@ const RequirementNode = ({ id, isConnectable }: NodeProps) => {
   const nodeData: NodeData = useAppSelector(
     state => state.requirement.nodes.find(n => n.id === id)?.data,
   );
-  const dispatch = useAppDispatch();
   const { onDrawerOpen } = useDrawerDisclosure();
 
   if (!nodeData) return <p>Loading</p>;
@@ -35,20 +30,7 @@ const RequirementNode = ({ id, isConnectable }: NodeProps) => {
       />
       <CardHeader>
         <Heading as="h4" size="md">
-          <Editable
-            defaultValue={nodeData.title}
-            onChange={text =>
-              dispatch(
-                changeRequirementNodeData({
-                  id: id,
-                  data: { title: text, description: nodeData.description },
-                }),
-              )
-            }
-          >
-            <EditablePreview />
-            <EditableInput />
-          </Editable>
+          <Heading size={'md'}>{nodeData.title}</Heading>
         </Heading>
       </CardHeader>
       <CardBody>

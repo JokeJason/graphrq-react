@@ -15,6 +15,8 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { UpdateRequirementsDocument } from '@/gql/graphql.ts';
+import { useAppDispatch } from '@/app/hooks.ts';
+import { changeRequirementNodeData } from '@/features/ReactFlow/requirementSlice.ts';
 
 interface RequirementNodeInfoDrawerFormProps {
   id: string;
@@ -25,6 +27,8 @@ interface RequirementNodeInfoDrawerFormProps {
 const RequirementNodeInfoDrawerForm: React.FC<
   RequirementNodeInfoDrawerFormProps
 > = ({ id, data, onClose }) => {
+  const dispatch = useAppDispatch();
+
   const [updateRequirementNode, { loading, error }] = useMutation(
     UpdateRequirementsDocument,
   );
@@ -55,6 +59,8 @@ const RequirementNodeInfoDrawerForm: React.FC<
       },
     });
 
+    // update the node in the graph
+    dispatch(changeRequirementNodeData({ id: id, data: data }));
     onClose();
   };
 
