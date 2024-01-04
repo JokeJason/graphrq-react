@@ -15,8 +15,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useMutation } from '@apollo/client';
 import { UpdateRequirementsDocument } from '@/gql/graphql.ts';
-import { useAppDispatch } from '@/app/hooks.ts';
-import { changeRequirementNodeData } from '@/features/ReactFlow/requirementSlice.ts';
 
 interface RequirementNodeInfoDrawerFormProps {
   id: string;
@@ -27,8 +25,6 @@ interface RequirementNodeInfoDrawerFormProps {
 const RequirementNodeInfoDrawerForm: React.FC<
   RequirementNodeInfoDrawerFormProps
 > = ({ id, data, onClose }) => {
-  const dispatch = useAppDispatch();
-
   const [updateRequirementNode, { loading, error }] = useMutation(
     UpdateRequirementsDocument,
   );
@@ -59,9 +55,12 @@ const RequirementNodeInfoDrawerForm: React.FC<
       },
     });
 
-    // update the node in the graph
-    dispatch(changeRequirementNodeData({ id: id, data: data }));
-    onClose();
+    // If mutation is successful, close the drawer
+    // Note: no need to update store, as the cache will be updated by the return of mutation (refer to https://www.apollographql.com/docs/react/data/mutations/#include-modified-objects-in-mutation-responses)
+    // App.tsx will use the updated cache to update RTK store, hence rerender components
+    if (error === undefined && !loading) {
+      onClose();
+    }
   };
 
   if (loading)
@@ -88,8 +87,6 @@ const RequirementNodeInfoDrawerForm: React.FC<
       </DrawerContent>
     );
   }
-
-  // use React state to store the title and description
 
   return (
     <DrawerContent id={id}>
