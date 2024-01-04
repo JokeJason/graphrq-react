@@ -1,5 +1,6 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { UpdateRequirementsDocument } from '@/gql/graphql.ts';
 import { NodeData } from '@/types.ts';
+import { useMutation } from '@apollo/client';
 import {
   Box,
   Button,
@@ -13,8 +14,7 @@ import {
   Stack,
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { UpdateRequirementsDocument } from '@/gql/graphql.ts';
+import { SubmitHandler, useForm } from 'react-hook-form';
 
 interface RequirementNodeInfoDrawerFormProps {
   id: string;
@@ -118,7 +118,7 @@ const RequirementNodeInfoDrawerForm: React.FC<
         <Button variant="outline" mr={3} onClick={onClose}>
           Cancel
         </Button>
-        <Button colorScheme="blue" onClick={handleSubmit(onSubmit)}>
+        <Button colorScheme="orange" onClick={handleSubmit(onSubmit)}>
           Submit
         </Button>
       </DrawerFooter>
