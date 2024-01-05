@@ -1,3 +1,5 @@
+import { useAppDispatch } from '@/app/hooks.ts';
+import { deleteRequirement } from '@/features/ReactFlow/requirementSlice.ts';
 import { UpdateRequirementsDocument } from '@/gql/graphql.ts';
 import { NodeData } from '@/types.ts';
 import { useMutation } from '@apollo/client';
@@ -25,6 +27,8 @@ interface RequirementNodeInfoDrawerFormProps {
 const RequirementNodeInfoDrawerForm: React.FC<
   RequirementNodeInfoDrawerFormProps
 > = ({ id, data, onClose }) => {
+  const dispatch = useAppDispatch();
+
   const [updateRequirementNode, { loading, error }] = useMutation(
     UpdateRequirementsDocument,
   );
@@ -120,6 +124,14 @@ const RequirementNodeInfoDrawerForm: React.FC<
         </Button>
         <Button colorScheme="orange" onClick={handleSubmit(onSubmit)}>
           Submit
+        </Button>
+        <Button
+          colorScheme={'red'}
+          onClick={() => {
+            dispatch(deleteRequirement(id)), onClose();
+          }}
+        >
+          Delete
         </Button>
       </DrawerFooter>
     </DrawerContent>

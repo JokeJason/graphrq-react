@@ -9,6 +9,20 @@ query GetRequirements {
     }
 }
 
+mutation CreateRequirements($input: [RequirementCreateInput!]!) {
+    createRequirements(input: $input) {
+        requirements {
+            id
+            title
+            description
+
+        }
+        info {
+            nodesCreated
+        }
+    }
+}
+
 mutation UpdateRequirements($where: RequirementWhere, $update: RequirementUpdateInput) {
     updateRequirements(where: $where, update: $update) {
         requirements {
@@ -19,5 +33,30 @@ mutation UpdateRequirements($where: RequirementWhere, $update: RequirementUpdate
                 id
             }
         }
+    }
+}
+
+mutation UpdateRequirementsToCreateChildren($where: RequirementWhere, $connectOrCreate: RequirementConnectOrCreateInput, $create: RequirementRelationInput) {
+    updateRequirements(where: $where, connectOrCreate: $connectOrCreate, create: $create) {
+        info {
+            nodesCreated
+            relationshipsCreated
+        }
+        requirements {
+            id
+            title
+            description
+            children {
+                id
+                title
+            }
+        }
+    }
+}
+
+mutation DeleteRequirements($where: RequirementWhere) {
+    deleteRequirements(where: $where) {
+        nodesDeleted
+        relationshipsDeleted
     }
 }

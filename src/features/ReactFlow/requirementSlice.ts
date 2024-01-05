@@ -1,7 +1,17 @@
+import { apolloClient } from '@/app/services/apolloClient.ts';
+import {
+  CreateRequirementsDocument,
+  DeleteRequirementsDocument,
+} from '@/gql/graphql.ts';
 import { RequirementNodeDataChange } from '@/types.ts';
 import { getLayoutedElements } from '@/utils/layout.ts';
 import * as utils from '@/utils/utils.ts';
-import { createSlice, Draft, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  Draft,
+  PayloadAction,
+} from '@reduxjs/toolkit';
 import {
   addEdge,
   applyEdgeChanges,
@@ -18,6 +28,41 @@ const initialState: { nodes: Node[]; edges: Edge[]; isDrawerOpen: boolean } = {
   edges: [],
   isDrawerOpen: false,
 };
+
+export const createNewRequirement = createAsyncThunk(
+  'requirementNodes/createNewRequirement',
+  async () => {
+    const res = await apolloClient.mutate({
+      mutation: CreateRequirementsDocument,
+      variables: {
+        input: {
+          title: 'New Requirement',
+          description: 'New Requirement Description',
+        },
+      },
+      refetchQueries: ['GetRequirements'], // refetchQueries will trigger reload graph
+    });
+
+    return res.data;
+  },
+);
+
+export const deleteRequirement = createAsyncThunk(
+  'requirementNodes/deleteRequirement',
+  async (id: string) => {
+    const res = await apolloClient.mutate({
+      mutation: DeleteRequirementsDocument,
+      variables: {
+        where: {
+          id: id,
+        },
+      },
+      refetchQueries: ['GetRequirements'], // refetchQueries will trigger reload graph
+    });
+
+    return res.data;
+  },
+);
 
 export const requirementSlice = createSlice({
   name: 'requirementNodes',
@@ -81,6 +126,16 @@ export const requirementSlice = createSlice({
     closeDrawer: state => {
       state.isDrawerOpen = false;
     },
+  },
+  extraReducers: builder => {
+    // TODO: need to handle state change for async thunk (Create New Requirement) properly
+    builder.addCase(createNewRequirement.fulfilled, () => {
+      console.log('createNewRequirement.fulfilled');
+    });
+    // TODO: need to handle state change for async thunk (Delete Requirement) properly
+    builder.addCase(deleteRequirement.fulfilled, () => {
+      console.log('deleteRequirement.fulfilled');
+    });
   },
 });
 

@@ -1,4 +1,5 @@
 import { useAppDispatch } from '@/app/hooks.ts';
+import NavBar from '@/components/NavBar.tsx';
 import Flow from '@/features/ReactFlow/Flow.tsx';
 import { loadGraph } from '@/features/ReactFlow/requirementSlice.ts';
 import { GetRequirementsDocument } from '@/gql/graphql.ts';
@@ -14,6 +15,7 @@ const App = () => {
   // you can verify it by checking previousData of following useQuery
   const { loading, error, data } = useQuery(GetRequirementsDocument);
 
+  // TODO: refetch to update graph is not successful when creating new node or deleting node
   useEffect(() => {
     if (data) {
       dispatch(loadGraph(data));
@@ -25,6 +27,7 @@ const App = () => {
 
   return (
     <>
+      <NavBar />
       <Flow />
     </>
   );
