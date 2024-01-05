@@ -1,20 +1,16 @@
+import { apolloClient } from '@/app/services/apolloClient.ts';
+import { ApolloProvider } from '@apollo/client';
+import { ChakraProvider } from '@chakra-ui/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { ReactFlowProvider } from 'reactflow';
 import App from './App.tsx';
-import { Provider } from 'react-redux';
 import { store } from './app/store.ts';
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { ChakraProvider } from '@chakra-ui/react';
-
-const client = new ApolloClient({
-  uri: 'http://localhost:4000/graphql',
-  cache: new InMemoryCache(),
-});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <ApolloProvider client={client}>
+    <ApolloProvider client={apolloClient}>
       <Provider store={store}>
         <ReactFlowProvider>
           <ChakraProvider>
