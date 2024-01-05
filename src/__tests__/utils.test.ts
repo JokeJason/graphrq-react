@@ -1,5 +1,5 @@
-import fs from 'fs';
 import * as utils from '@/utils/utils.ts';
+import * as fs from 'fs';
 
 describe('graphrq-react test', () => {
   test('createReactFlowNodes should convert json to NodeType', () => {
