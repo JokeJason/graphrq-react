@@ -1,5 +1,6 @@
 import { apolloClient } from '@/app/services/apolloClient.ts';
 import {
+  ConnectRequirementsDocument,
   CreateRequirementsDocument,
   DeleteRequirementsDocument,
 } from '@/gql/graphql.ts';
@@ -61,6 +62,34 @@ export const deleteRequirement = createAsyncThunk(
     });
 
     return res.data;
+  },
+);
+
+export const connectNodes = createAsyncThunk(
+  'requirementNodes/connectNodes',
+  async (connection: Connection) => {
+    const source = connection.source;
+    const target = connection.target;
+    await apolloClient.mutate({
+      mutation: ConnectRequirementsDocument,
+      variables: {
+        where: {
+          id: source,
+        },
+        connect: {
+          children: [
+            {
+              where: {
+                node: {
+                  id: target,
+                },
+              },
+            },
+          ],
+        },
+      },
+    });
+    return connection;
   },
 );
 
@@ -135,6 +164,9 @@ export const requirementSlice = createSlice({
     // TODO: need to handle state change for async thunk (Delete Requirement) properly
     builder.addCase(deleteRequirement.fulfilled, () => {
       console.log('deleteRequirement.fulfilled');
+    });
+    builder.addCase(connectNodes.fulfilled, (state, action) => {
+      state.edges = addEdge(action.payload, state.edges);
     });
   },
 });

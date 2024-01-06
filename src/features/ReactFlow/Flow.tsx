@@ -1,11 +1,11 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
 import 'reactflow/dist/style.css';
-
-import ReactFlow, { Background, Controls, MiniMap, NodeTypes } from 'reactflow';
-import { changeEdges, changeNodes, onConnect } from './requirementSlice.ts';
-import RequirementNode from '@/components/RequirementNode.tsx';
 import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
 import NodeInfoDrawer from '@/components/NodeInfoDrawer.tsx';
+import RequirementNode from '@/components/RequirementNode.tsx';
+
+import ReactFlow, { Background, Controls, MiniMap, NodeTypes } from 'reactflow';
+import { changeEdges, changeNodes, connectNodes } from './requirementSlice.ts';
 
 const nodeTypes: NodeTypes = { requirement: RequirementNode };
 
@@ -23,7 +23,7 @@ const Flow = () => {
           onNodesChange={changes => dispatch(changeNodes(changes))}
           edges={edges}
           onEdgesChange={changes => dispatch(changeEdges(changes))}
-          onConnect={onConnect}
+          onConnect={cnt => dispatch(connectNodes(cnt))}
           nodeTypes={nodeTypes}
           fitView
         >

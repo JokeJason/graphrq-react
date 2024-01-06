@@ -54,6 +54,24 @@ mutation UpdateRequirementsToCreateChildren($where: RequirementWhere, $connectOr
     }
 }
 
+mutation ConnectRequirements($where: RequirementWhere, $connect: RequirementConnectInput) {
+    updateRequirements(where: $where, connect: $connect) {
+        info {
+            relationshipsCreated
+        }
+        requirements {
+            id
+            description
+            title
+            children {
+                id
+                title
+                description
+            }
+        }
+    }
+}
+
 mutation DeleteRequirements($where: RequirementWhere) {
     deleteRequirements(where: $where) {
         nodesDeleted
