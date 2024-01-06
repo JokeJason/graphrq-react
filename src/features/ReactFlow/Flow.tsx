@@ -1,5 +1,6 @@
 import { useAppDispatch, useAppSelector } from '@/app/hooks.ts';
 import 'reactflow/dist/style.css';
+import './node.css';
 import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
 import NodeInfoDrawer from '@/components/NodeInfoDrawer.tsx';
 import RequirementNode from '@/components/RequirementNode.tsx';
