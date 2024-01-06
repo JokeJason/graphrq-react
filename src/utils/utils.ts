@@ -11,6 +11,7 @@ export const createReactFlowNodes = (
       data: {
         title: req.title,
         description: req.description,
+        category: req.category,
       },
       position: {
         x: 0,

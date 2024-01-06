@@ -3,6 +3,7 @@ query GetRequirements {
         id
         title
         description
+        category
         children {
             id
         }
@@ -15,7 +16,7 @@ mutation CreateRequirements($input: [RequirementCreateInput!]!) {
             id
             title
             description
-
+            category
         }
         info {
             nodesCreated
@@ -29,6 +30,7 @@ mutation UpdateRequirements($where: RequirementWhere, $update: RequirementUpdate
             id
             title
             description
+            category
             children {
                 id
             }
@@ -46,6 +48,7 @@ mutation UpdateRequirementsToCreateChildren($where: RequirementWhere, $connectOr
             id
             title
             description
+            category
             children {
                 id
                 title
@@ -61,12 +64,14 @@ mutation ConnectRequirements($where: RequirementWhere, $connect: RequirementConn
         }
         requirements {
             id
-            description
             title
+            description
+            category
             children {
                 id
                 title
                 description
+                category
             }
         }
     }

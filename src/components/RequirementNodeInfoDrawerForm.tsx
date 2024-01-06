@@ -1,6 +1,9 @@
 import { useAppDispatch } from '@/app/hooks.ts';
 import { deleteRequirement } from '@/features/ReactFlow/requirementSlice.ts';
-import { UpdateRequirementsDocument } from '@/gql/graphql.ts';
+import {
+  RequirementCategory,
+  UpdateRequirementsDocument,
+} from '@/gql/graphql.ts';
 import { NodeData } from '@/types.ts';
 import { useMutation } from '@apollo/client';
 import {
@@ -12,6 +15,7 @@ import {
   DrawerHeader,
   FormLabel,
   Input,
+  Select,
   Spinner,
   Stack,
 } from '@chakra-ui/react';
@@ -35,10 +39,12 @@ const RequirementNodeInfoDrawerForm: React.FC<
 
   const [title, setTitle] = useState(data.title);
   const [description, setDescription] = useState(data.description);
+  const [category, setCategory] = useState(data.category);
 
   useEffect(() => {
     setTitle(data.title);
     setDescription(data.description);
+    setCategory(data.category);
   }, [data]);
 
   const {
@@ -55,6 +61,7 @@ const RequirementNodeInfoDrawerForm: React.FC<
         update: {
           title: data.title,
           description: data.description,
+          category: data.category,
         },
       },
     });
@@ -114,6 +121,23 @@ const RequirementNodeInfoDrawerForm: React.FC<
               value={description}
               onChange={e => setDescription(e.target.value)}
             />
+          </Box>
+          <Box>
+            <FormLabel htmlFor={'category'}>Category</FormLabel>
+            <Select
+              {...register('category', { required: true })}
+              placeholder={'Requirement Category'}
+              value={category}
+              onChange={e => setCategory(e.target.value as RequirementCategory)}
+            >
+              <option value={'CUSTOMER'}>Customer</option>
+              <option value={'SYSTEM'}>System</option>
+              <option value={'ENGINEERING'}>Engineering</option>
+              <option value={'USER_STORY'}>User Story</option>
+              <option value={'IMPLEMENTATION'}>Implementation</option>
+              <option value={'QUALITY_ASSURANCE'}>Quality Assurance</option>
+              <option value={'UNDEFINED'}>Undefined</option>
+            </Select>
           </Box>
         </Stack>
       </DrawerBody>

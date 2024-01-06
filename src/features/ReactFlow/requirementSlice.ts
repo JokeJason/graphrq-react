@@ -3,6 +3,7 @@ import {
   ConnectRequirementsDocument,
   CreateRequirementsDocument,
   DeleteRequirementsDocument,
+  RequirementCategory,
 } from '@/gql/graphql.ts';
 import { RequirementNodeDataChange } from '@/types.ts';
 import { getLayoutedElements } from '@/utils/layout.ts';
@@ -39,6 +40,7 @@ export const createNewRequirement = createAsyncThunk(
         input: {
           title: 'New Requirement',
           description: 'New Requirement Description',
+          category: RequirementCategory.Undefined,
         },
       },
       refetchQueries: ['GetRequirements'], // refetchQueries will trigger reload graph
@@ -111,12 +113,18 @@ export const requirementSlice = createSlice({
       } else {
         // for each action.payload.requirements, find the corresponding node in state.nodes and update action.payload.requirements[i].data
         action.payload.requirements.forEach(
-          (req: { id: string; title: any; description: any }) => {
+          (req: {
+            id: string;
+            title: any;
+            description: any;
+            category: RequirementCategory;
+          }) => {
             const node = state.nodes.find(n => n.id === req.id);
             if (node) {
               node.data = {
                 title: req.title,
                 description: req.description,
+                category: req.category,
               };
             }
           },

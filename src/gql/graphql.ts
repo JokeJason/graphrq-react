@@ -275,6 +275,7 @@ export type QueryUsersConnectionArgs = {
 
 export type Requirement = {
   __typename?: 'Requirement';
+  category?: Maybe<RequirementCategory>;
   children: Array<Requirement>;
   childrenAggregate?: Maybe<RequirementRequirementChildrenAggregationSelection>;
   childrenConnection: RequirementChildrenConnection;
@@ -284,9 +285,6 @@ export type Requirement = {
   creatorConnection: RequirementCreatorConnection;
   description?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
-  parent?: Maybe<Requirement>;
-  parentAggregate?: Maybe<RequirementRequirementParentAggregationSelection>;
-  parentConnection: RequirementParentConnection;
   tests: Array<Test>;
   testsAggregate?: Maybe<RequirementTestTestsAggregationSelection>;
   testsConnection: RequirementTestsConnection;
@@ -339,28 +337,6 @@ export type RequirementCreatorConnectionArgs = {
 };
 
 
-export type RequirementParentArgs = {
-  directed?: InputMaybe<Scalars['Boolean']['input']>;
-  options?: InputMaybe<RequirementOptions>;
-  where?: InputMaybe<RequirementWhere>;
-};
-
-
-export type RequirementParentAggregateArgs = {
-  directed?: InputMaybe<Scalars['Boolean']['input']>;
-  where?: InputMaybe<RequirementWhere>;
-};
-
-
-export type RequirementParentConnectionArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  directed?: InputMaybe<Scalars['Boolean']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  sort?: InputMaybe<Array<RequirementParentConnectionSort>>;
-  where?: InputMaybe<RequirementParentConnectionWhere>;
-};
-
-
 export type RequirementTestsArgs = {
   directed?: InputMaybe<Scalars['Boolean']['input']>;
   options?: InputMaybe<TestOptions>;
@@ -391,6 +367,17 @@ export type RequirementAggregateSelection = {
   title: StringAggregateSelectionNonNullable;
   updatedAt: DateTimeAggregateSelectionNullable;
 };
+
+export enum RequirementCategory {
+  Customer = 'CUSTOMER',
+  Engineering = 'ENGINEERING',
+  Implementation = 'IMPLEMENTATION',
+  QualityAssurance = 'QUALITY_ASSURANCE',
+  Root = 'ROOT',
+  System = 'SYSTEM',
+  Undefined = 'UNDEFINED',
+  UserStory = 'USER_STORY'
+}
 
 export type RequirementChildrenAggregateInput = {
   AND?: InputMaybe<Array<RequirementChildrenAggregateInput>>;
@@ -526,7 +513,6 @@ export type RequirementChildrenUpdateFieldInput = {
 export type RequirementConnectInput = {
   children?: InputMaybe<Array<RequirementChildrenConnectFieldInput>>;
   creator?: InputMaybe<RequirementCreatorConnectFieldInput>;
-  parent?: InputMaybe<RequirementParentConnectFieldInput>;
   tests?: InputMaybe<Array<RequirementTestsConnectFieldInput>>;
 };
 
@@ -539,10 +525,10 @@ export type RequirementConnectWhere = {
 };
 
 export type RequirementCreateInput = {
+  category?: InputMaybe<RequirementCategory>;
   children?: InputMaybe<RequirementChildrenFieldInput>;
   creator?: InputMaybe<RequirementCreatorFieldInput>;
   description?: InputMaybe<Scalars['String']['input']>;
-  parent?: InputMaybe<RequirementParentFieldInput>;
   tests?: InputMaybe<RequirementTestsFieldInput>;
   title: Scalars['String']['input'];
 };
@@ -669,14 +655,12 @@ export type RequirementCreatorUpdateFieldInput = {
 export type RequirementDeleteInput = {
   children?: InputMaybe<Array<RequirementChildrenDeleteFieldInput>>;
   creator?: InputMaybe<RequirementCreatorDeleteFieldInput>;
-  parent?: InputMaybe<RequirementParentDeleteFieldInput>;
   tests?: InputMaybe<Array<RequirementTestsDeleteFieldInput>>;
 };
 
 export type RequirementDisconnectInput = {
   children?: InputMaybe<Array<RequirementChildrenDisconnectFieldInput>>;
   creator?: InputMaybe<RequirementCreatorDisconnectFieldInput>;
-  parent?: InputMaybe<RequirementParentDisconnectFieldInput>;
   tests?: InputMaybe<Array<RequirementTestsDisconnectFieldInput>>;
 };
 
@@ -693,141 +677,9 @@ export type RequirementOptions = {
   sort?: InputMaybe<Array<RequirementSort>>;
 };
 
-export type RequirementParentAggregateInput = {
-  AND?: InputMaybe<Array<RequirementParentAggregateInput>>;
-  NOT?: InputMaybe<RequirementParentAggregateInput>;
-  OR?: InputMaybe<Array<RequirementParentAggregateInput>>;
-  count?: InputMaybe<Scalars['Int']['input']>;
-  count_GT?: InputMaybe<Scalars['Int']['input']>;
-  count_GTE?: InputMaybe<Scalars['Int']['input']>;
-  count_LT?: InputMaybe<Scalars['Int']['input']>;
-  count_LTE?: InputMaybe<Scalars['Int']['input']>;
-  node?: InputMaybe<RequirementParentNodeAggregationWhereInput>;
-};
-
-export type RequirementParentConnectFieldInput = {
-  connect?: InputMaybe<RequirementConnectInput>;
-  /** Whether or not to overwrite any matching relationship with the new properties. */
-  overwrite?: Scalars['Boolean']['input'];
-  where?: InputMaybe<RequirementConnectWhere>;
-};
-
-export type RequirementParentConnection = {
-  __typename?: 'RequirementParentConnection';
-  edges: Array<RequirementParentRelationship>;
-  pageInfo: PageInfo;
-  totalCount: Scalars['Int']['output'];
-};
-
-export type RequirementParentConnectionSort = {
-  node?: InputMaybe<RequirementSort>;
-};
-
-export type RequirementParentConnectionWhere = {
-  AND?: InputMaybe<Array<RequirementParentConnectionWhere>>;
-  NOT?: InputMaybe<RequirementParentConnectionWhere>;
-  OR?: InputMaybe<Array<RequirementParentConnectionWhere>>;
-  node?: InputMaybe<RequirementWhere>;
-};
-
-export type RequirementParentCreateFieldInput = {
-  node: RequirementCreateInput;
-};
-
-export type RequirementParentDeleteFieldInput = {
-  delete?: InputMaybe<RequirementDeleteInput>;
-  where?: InputMaybe<RequirementParentConnectionWhere>;
-};
-
-export type RequirementParentDisconnectFieldInput = {
-  disconnect?: InputMaybe<RequirementDisconnectInput>;
-  where?: InputMaybe<RequirementParentConnectionWhere>;
-};
-
-export type RequirementParentFieldInput = {
-  connect?: InputMaybe<RequirementParentConnectFieldInput>;
-  create?: InputMaybe<RequirementParentCreateFieldInput>;
-};
-
-export type RequirementParentNodeAggregationWhereInput = {
-  AND?: InputMaybe<Array<RequirementParentNodeAggregationWhereInput>>;
-  NOT?: InputMaybe<RequirementParentNodeAggregationWhereInput>;
-  OR?: InputMaybe<Array<RequirementParentNodeAggregationWhereInput>>;
-  createdAt_MAX_EQUAL?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MAX_GT?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MAX_GTE?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MAX_LT?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MAX_LTE?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MIN_EQUAL?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MIN_GT?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MIN_GTE?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MIN_LT?: InputMaybe<Scalars['DateTime']['input']>;
-  createdAt_MIN_LTE?: InputMaybe<Scalars['DateTime']['input']>;
-  description_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']['input']>;
-  description_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']['input']>;
-  description_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']['input']>;
-  description_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']['input']>;
-  description_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']['input']>;
-  description_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']['input']>;
-  description_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']['input']>;
-  description_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
-  description_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
-  description_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
-  description_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']['input']>;
-  description_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']['input']>;
-  description_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
-  description_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
-  description_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
-  title_AVERAGE_LENGTH_EQUAL?: InputMaybe<Scalars['Float']['input']>;
-  title_AVERAGE_LENGTH_GT?: InputMaybe<Scalars['Float']['input']>;
-  title_AVERAGE_LENGTH_GTE?: InputMaybe<Scalars['Float']['input']>;
-  title_AVERAGE_LENGTH_LT?: InputMaybe<Scalars['Float']['input']>;
-  title_AVERAGE_LENGTH_LTE?: InputMaybe<Scalars['Float']['input']>;
-  title_LONGEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']['input']>;
-  title_LONGEST_LENGTH_GT?: InputMaybe<Scalars['Int']['input']>;
-  title_LONGEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
-  title_LONGEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
-  title_LONGEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
-  title_SHORTEST_LENGTH_EQUAL?: InputMaybe<Scalars['Int']['input']>;
-  title_SHORTEST_LENGTH_GT?: InputMaybe<Scalars['Int']['input']>;
-  title_SHORTEST_LENGTH_GTE?: InputMaybe<Scalars['Int']['input']>;
-  title_SHORTEST_LENGTH_LT?: InputMaybe<Scalars['Int']['input']>;
-  title_SHORTEST_LENGTH_LTE?: InputMaybe<Scalars['Int']['input']>;
-  updatedAt_MAX_EQUAL?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MAX_GT?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MAX_GTE?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MAX_LT?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MAX_LTE?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MIN_EQUAL?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MIN_GT?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MIN_GTE?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MIN_LT?: InputMaybe<Scalars['DateTime']['input']>;
-  updatedAt_MIN_LTE?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type RequirementParentRelationship = {
-  __typename?: 'RequirementParentRelationship';
-  cursor: Scalars['String']['output'];
-  node: Requirement;
-};
-
-export type RequirementParentUpdateConnectionInput = {
-  node?: InputMaybe<RequirementUpdateInput>;
-};
-
-export type RequirementParentUpdateFieldInput = {
-  connect?: InputMaybe<RequirementParentConnectFieldInput>;
-  create?: InputMaybe<RequirementParentCreateFieldInput>;
-  delete?: InputMaybe<RequirementParentDeleteFieldInput>;
-  disconnect?: InputMaybe<RequirementParentDisconnectFieldInput>;
-  update?: InputMaybe<RequirementParentUpdateConnectionInput>;
-  where?: InputMaybe<RequirementParentConnectionWhere>;
-};
-
 export type RequirementRelationInput = {
   children?: InputMaybe<Array<RequirementChildrenCreateFieldInput>>;
   creator?: InputMaybe<RequirementCreatorCreateFieldInput>;
-  parent?: InputMaybe<RequirementParentCreateFieldInput>;
   tests?: InputMaybe<Array<RequirementTestsCreateFieldInput>>;
 };
 
@@ -846,23 +698,9 @@ export type RequirementRequirementChildrenNodeAggregateSelection = {
   updatedAt: DateTimeAggregateSelectionNullable;
 };
 
-export type RequirementRequirementParentAggregationSelection = {
-  __typename?: 'RequirementRequirementParentAggregationSelection';
-  count: Scalars['Int']['output'];
-  node?: Maybe<RequirementRequirementParentNodeAggregateSelection>;
-};
-
-export type RequirementRequirementParentNodeAggregateSelection = {
-  __typename?: 'RequirementRequirementParentNodeAggregateSelection';
-  createdAt: DateTimeAggregateSelectionNonNullable;
-  description: StringAggregateSelectionNullable;
-  id: IdAggregateSelectionNonNullable;
-  title: StringAggregateSelectionNonNullable;
-  updatedAt: DateTimeAggregateSelectionNullable;
-};
-
 /** Fields to sort Requirements by. The order in which sorts are applied is not guaranteed when specifying many fields in one RequirementSort object. */
 export type RequirementSort = {
+  category?: InputMaybe<SortDirection>;
   createdAt?: InputMaybe<SortDirection>;
   description?: InputMaybe<SortDirection>;
   id?: InputMaybe<SortDirection>;
@@ -1017,10 +855,10 @@ export type RequirementTestsUpdateFieldInput = {
 };
 
 export type RequirementUpdateInput = {
+  category?: InputMaybe<RequirementCategory>;
   children?: InputMaybe<Array<RequirementChildrenUpdateFieldInput>>;
   creator?: InputMaybe<RequirementCreatorUpdateFieldInput>;
   description?: InputMaybe<Scalars['String']['input']>;
-  parent?: InputMaybe<RequirementParentUpdateFieldInput>;
   tests?: InputMaybe<Array<RequirementTestsUpdateFieldInput>>;
   title?: InputMaybe<Scalars['String']['input']>;
 };
@@ -1042,6 +880,8 @@ export type RequirementWhere = {
   AND?: InputMaybe<Array<RequirementWhere>>;
   NOT?: InputMaybe<RequirementWhere>;
   OR?: InputMaybe<Array<RequirementWhere>>;
+  category?: InputMaybe<RequirementCategory>;
+  category_IN?: InputMaybe<Array<InputMaybe<RequirementCategory>>>;
   childrenAggregate?: InputMaybe<RequirementChildrenAggregateInput>;
   /** Return Requirements where all of the related RequirementChildrenConnections match this filter */
   childrenConnection_ALL?: InputMaybe<RequirementChildrenConnectionWhere>;
@@ -1080,11 +920,6 @@ export type RequirementWhere = {
   id_ENDS_WITH?: InputMaybe<Scalars['ID']['input']>;
   id_IN?: InputMaybe<Array<Scalars['ID']['input']>>;
   id_STARTS_WITH?: InputMaybe<Scalars['ID']['input']>;
-  parent?: InputMaybe<RequirementWhere>;
-  parentAggregate?: InputMaybe<RequirementParentAggregateInput>;
-  parentConnection?: InputMaybe<RequirementParentConnectionWhere>;
-  parentConnection_NOT?: InputMaybe<RequirementParentConnectionWhere>;
-  parent_NOT?: InputMaybe<RequirementWhere>;
   testsAggregate?: InputMaybe<RequirementTestsAggregateInput>;
   /** Return Requirements where all of the related RequirementTestsConnections match this filter */
   testsConnection_ALL?: InputMaybe<RequirementTestsConnectionWhere>;
@@ -2016,14 +1851,14 @@ export type UsersConnection = {
 export type GetRequirementsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetRequirementsQuery = { __typename?: 'Query', requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, children: Array<{ __typename?: 'Requirement', id: string }> }> };
+export type GetRequirementsQuery = { __typename?: 'Query', requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, category?: RequirementCategory | null, children: Array<{ __typename?: 'Requirement', id: string }> }> };
 
 export type CreateRequirementsMutationVariables = Exact<{
   input: Array<RequirementCreateInput> | RequirementCreateInput;
 }>;
 
 
-export type CreateRequirementsMutation = { __typename?: 'Mutation', createRequirements: { __typename?: 'CreateRequirementsMutationResponse', requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null }>, info: { __typename?: 'CreateInfo', nodesCreated: number } } };
+export type CreateRequirementsMutation = { __typename?: 'Mutation', createRequirements: { __typename?: 'CreateRequirementsMutationResponse', requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, category?: RequirementCategory | null }>, info: { __typename?: 'CreateInfo', nodesCreated: number } } };
 
 export type UpdateRequirementsMutationVariables = Exact<{
   where?: InputMaybe<RequirementWhere>;
@@ -2031,7 +1866,7 @@ export type UpdateRequirementsMutationVariables = Exact<{
 }>;
 
 
-export type UpdateRequirementsMutation = { __typename?: 'Mutation', updateRequirements: { __typename?: 'UpdateRequirementsMutationResponse', requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, children: Array<{ __typename?: 'Requirement', id: string }> }> } };
+export type UpdateRequirementsMutation = { __typename?: 'Mutation', updateRequirements: { __typename?: 'UpdateRequirementsMutationResponse', requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, category?: RequirementCategory | null, children: Array<{ __typename?: 'Requirement', id: string }> }> } };
 
 export type UpdateRequirementsToCreateChildrenMutationVariables = Exact<{
   where?: InputMaybe<RequirementWhere>;
@@ -2040,7 +1875,7 @@ export type UpdateRequirementsToCreateChildrenMutationVariables = Exact<{
 }>;
 
 
-export type UpdateRequirementsToCreateChildrenMutation = { __typename?: 'Mutation', updateRequirements: { __typename?: 'UpdateRequirementsMutationResponse', info: { __typename?: 'UpdateInfo', nodesCreated: number, relationshipsCreated: number }, requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, children: Array<{ __typename?: 'Requirement', id: string, title: string }> }> } };
+export type UpdateRequirementsToCreateChildrenMutation = { __typename?: 'Mutation', updateRequirements: { __typename?: 'UpdateRequirementsMutationResponse', info: { __typename?: 'UpdateInfo', nodesCreated: number, relationshipsCreated: number }, requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, category?: RequirementCategory | null, children: Array<{ __typename?: 'Requirement', id: string, title: string }> }> } };
 
 export type ConnectRequirementsMutationVariables = Exact<{
   where?: InputMaybe<RequirementWhere>;
@@ -2048,7 +1883,7 @@ export type ConnectRequirementsMutationVariables = Exact<{
 }>;
 
 
-export type ConnectRequirementsMutation = { __typename?: 'Mutation', updateRequirements: { __typename?: 'UpdateRequirementsMutationResponse', info: { __typename?: 'UpdateInfo', relationshipsCreated: number }, requirements: Array<{ __typename?: 'Requirement', id: string, description?: string | null, title: string, children: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null }> }> } };
+export type ConnectRequirementsMutation = { __typename?: 'Mutation', updateRequirements: { __typename?: 'UpdateRequirementsMutationResponse', info: { __typename?: 'UpdateInfo', relationshipsCreated: number }, requirements: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, category?: RequirementCategory | null, children: Array<{ __typename?: 'Requirement', id: string, title: string, description?: string | null, category?: RequirementCategory | null }> }> } };
 
 export type DeleteRequirementsMutationVariables = Exact<{
   where?: InputMaybe<RequirementWhere>;
@@ -2058,9 +1893,9 @@ export type DeleteRequirementsMutationVariables = Exact<{
 export type DeleteRequirementsMutation = { __typename?: 'Mutation', deleteRequirements: { __typename?: 'DeleteInfo', nodesDeleted: number, relationshipsDeleted: number } };
 
 
-export const GetRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRequirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetRequirementsQuery, GetRequirementsQueryVariables>;
-export const CreateRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRequirements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementCreateInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}},{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodesCreated"}}]}}]}}]}}]} as unknown as DocumentNode<CreateRequirementsMutation, CreateRequirementsMutationVariables>;
-export const UpdateRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRequirements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementWhere"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"update"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementUpdateInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"update"},"value":{"kind":"Variable","name":{"kind":"Name","value":"update"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateRequirementsMutation, UpdateRequirementsMutationVariables>;
-export const UpdateRequirementsToCreateChildrenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRequirementsToCreateChildren"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementWhere"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"connectOrCreate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementConnectOrCreateInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"create"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementRelationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"connectOrCreate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"connectOrCreate"}}},{"kind":"Argument","name":{"kind":"Name","value":"create"},"value":{"kind":"Variable","name":{"kind":"Name","value":"create"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodesCreated"}},{"kind":"Field","name":{"kind":"Name","value":"relationshipsCreated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateRequirementsToCreateChildrenMutation, UpdateRequirementsToCreateChildrenMutationVariables>;
-export const ConnectRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ConnectRequirements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementWhere"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"connect"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementConnectInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"connect"},"value":{"kind":"Variable","name":{"kind":"Name","value":"connect"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"relationshipsCreated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ConnectRequirementsMutation, ConnectRequirementsMutationVariables>;
+export const GetRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetRequirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GetRequirementsQuery, GetRequirementsQueryVariables>;
+export const CreateRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateRequirements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"ListType","type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementCreateInput"}}}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}},{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodesCreated"}}]}}]}}]}}]} as unknown as DocumentNode<CreateRequirementsMutation, CreateRequirementsMutationVariables>;
+export const UpdateRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRequirements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementWhere"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"update"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementUpdateInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"update"},"value":{"kind":"Variable","name":{"kind":"Name","value":"update"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateRequirementsMutation, UpdateRequirementsMutationVariables>;
+export const UpdateRequirementsToCreateChildrenDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateRequirementsToCreateChildren"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementWhere"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"connectOrCreate"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementConnectOrCreateInput"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"create"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementRelationInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"connectOrCreate"},"value":{"kind":"Variable","name":{"kind":"Name","value":"connectOrCreate"}}},{"kind":"Argument","name":{"kind":"Name","value":"create"},"value":{"kind":"Variable","name":{"kind":"Name","value":"create"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodesCreated"}},{"kind":"Field","name":{"kind":"Name","value":"relationshipsCreated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UpdateRequirementsToCreateChildrenMutation, UpdateRequirementsToCreateChildrenMutationVariables>;
+export const ConnectRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ConnectRequirements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementWhere"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"connect"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementConnectInput"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"connect"},"value":{"kind":"Variable","name":{"kind":"Name","value":"connect"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"info"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"relationshipsCreated"}}]}},{"kind":"Field","name":{"kind":"Name","value":"requirements"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}},{"kind":"Field","name":{"kind":"Name","value":"children"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"category"}}]}}]}}]}}]}}]} as unknown as DocumentNode<ConnectRequirementsMutation, ConnectRequirementsMutationVariables>;
 export const DeleteRequirementsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteRequirements"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"RequirementWhere"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteRequirements"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodesDeleted"}},{"kind":"Field","name":{"kind":"Name","value":"relationshipsDeleted"}}]}}]}}]} as unknown as DocumentNode<DeleteRequirementsMutation, DeleteRequirementsMutationVariables>;
