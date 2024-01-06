@@ -2,11 +2,13 @@ import { useAppSelector } from '@/app/hooks.ts';
 import useDrawerDisclosure from '@/app/hooks/useDrawerDisclosure.ts';
 import { NodeData } from '@/types.ts';
 import {
+  Badge,
   Box,
   Card,
   CardBody,
   CardHeader,
   Heading,
+  HStack,
   Stack,
   StackDivider,
   Text,
@@ -22,7 +24,7 @@ const RequirementNode = ({ id, isConnectable }: NodeProps) => {
   if (!nodeData) return <p>Loading</p>;
 
   return (
-    <Card id={id} onClick={onDrawerOpen}>
+    <Card id={id} onClick={onDrawerOpen} width={'400px'}>
       <Handle
         type={'target'}
         position={Position.Left}
@@ -31,6 +33,9 @@ const RequirementNode = ({ id, isConnectable }: NodeProps) => {
       <CardHeader>
         <Heading size={'md'}>{nodeData.title}</Heading>
       </CardHeader>
+      <HStack marginX={'20px'} spacing={'10px'}>
+        <Badge>{nodeData.category}</Badge>
+      </HStack>
       <CardBody>
         <Stack divider={<StackDivider />} spacing={4}></Stack>
         <Box>
